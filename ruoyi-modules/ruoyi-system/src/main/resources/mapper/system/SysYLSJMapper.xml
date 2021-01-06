@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ruoyi.system.mapper.SysYLSJMapper">
+	<resultMap type="SysTNB" id="SysTnbResult">
+		<result property="Name"             column="Name"                />
+		<result property="idCardNo"         column="idCardNo"            />
+		<result property="BMI"              column="BMI"                 />
+		<result property="BMI_Suggest"      column="BMI_Suggest"         />
+		<result property="Arterial"         column="Arterial"            />
+		<result property="FastingGlucose"   column="FastingGlucose"      />
+		<result property="DrugName1"        column="DrugName1"           />
+		<result property="Usage_Day1"       column="Usage_Day1"          />
+		<result property="Usage_Time1"      column="Usage_Time1"         />
+		<result property="Insulin1"         column="Insulin1"            />
+		<result property="Doctor"           column="Doctor"              />
+	</resultMap>
+
+	<resultMap type="SysGXY" id="SysGXYResult">
+		<result property="Name"             column="Name"                />
+		<result property="idCardNo"         column="idCardNo"            />
+		<result property="PresentSymptoms"              column="PresentSymptoms"                 />
+		<result property="SystolicPressure"      column="SystolicPressure"         />
+		<result property="AssertPressure"         column="AssertPressure"            />
+		<result property="BMI"   column="BMI"      />
+		<result property="BMI_Suggest"        column="BMI_Suggest"           />
+		<result property="MedicationAdherence"       column="MedicationAdherence"          />
+		<result property="DrugName1"      column="DrugName1"         />
+		<result property="Usage_Day1"         column="Usage_Day1"            />
+		<result property="Doctor"           column="Doctor"              />
+	</resultMap>
+
+	<select id="selectAllPeople" parameterType="SysTnb" resultMap="SysTnbResult" >
+		SELECT NAME,idCardNo,BMI, BMI_Suggest,Arterial,FastingGlucose,
+		DrugName1,Usage_Day1,Usage_Day1,Usage_Time1,Insulin1,Doctor FROM `糖尿病`
+		<where>
+			<if test="Name != null and Name != ''">
+				NAME = #{Name}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectById" resultMap="SysTnbResult">
+        SELECT * FROM `糖尿病` WHERE  idCardNo=#{idCardNo}
+	</select>
+
+	<sql id="tnbKey">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="Name != null ">Name,</if>
+			<if test="idCardNo != null and idCardNo != ''">idCardNo,</if>
+			<if test="BMI != null and BMI != ''">BMI,</if>
+			<if test="BMI_Suggest != null and BMI_Suggest != ''">BMI_Suggest,</if>
+			<if test="Arterial != null and Arterial != ''">Arterial,</if>
+			<if test="FastingGlucose != null">FastingGlucose,</if>
+			<if test="DrugName1 != null">DrugName1,</if>
+			<if test="Usage_Day1 != null and Usage_Day1 != ''">Usage_Day1,</if>
+			<if test="Usage_Time1 != null and Usage_Time1 != ''">Usage_Time1,</if>
+			<if test="Insulin1 != null and Insulin1 != ''">Insulin1,</if>
+			<if test="Doctor != null and Doctor != ''">Doctor,</if>
+		</trim>
+	</sql>
+
+	<sql id="tnbValue">
+		<trim suffixOverrides=",">
+			<if test="Name != null ">#{Name},</if>
+			<if test="idCardNo != null and idCardNo != ''">#{idCardNo},</if>
+			<if test="BMI != null and BMI != ''">#{BMI},</if>
+			<if test="BMI_Suggest != null and BMI_Suggest != ''">#{BMI_Suggest},</if>
+			<if test="Arterial != null and Arterial != ''">#{Arterial},</if>
+			<if test="FastingGlucose != null">#{FastingGlucose},</if>
+			<if test="DrugName1 != null">#{DrugName1},</if>
+			<if test="Usage_Day1 != null and Usage_Day1 != ''">#{Usage_Day1},</if>
+			<if test="Usage_Time1 != null and Usage_Time1 != ''">#{Usage_Time1},</if>
+			<if test="Insulin1 != null and Insulin1 != ''">#{Insulin1},</if>
+			<if test="Doctor != null and Doctor != ''">#{Doctor},</if>
+		</trim>
+	</sql>
+
+	<insert id="insertTnb" parameterType="SysTnb" useGeneratedKeys="true" keyProperty="idCardNo">
+		insert into `糖尿病`(<include refid="tnbKey"/>)values(<include refid="tnbValue"/>)
+	</insert>
+
+	<delete id="deleteTnbById" parameterType="String">
+		delete from `糖尿病` where idCardNo in
+		<foreach collection="array" item="idCardNo" open="(" separator="," close=")">
+			#{idCardNo}
+		</foreach>
+	</delete>
+
+	<select id="selectAllGXY" parameterType="SysGXY" resultMap="SysGXYResult">
+		SELECT * FROM `高血压`
+		<where>
+			<if test="Name != null and Name != ''">
+				NAME = #{Name}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByGxyId" resultMap="SysGXYResult">
+        SELECT * FROM `高血压` WHERE  idCardNo=#{idCardNo}
+	</select>
+
+	<sql id="gxyKey">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="Name != null ">Name,</if>
+			<if test="idCardNo != null and idCardNo != ''">idCardNo,</if>
+			<if test="PresentSymptoms != null and PresentSymptoms != ''">PresentSymptoms,</if>
+			<if test="SystolicPressure != null and SystolicPressure != ''">SystolicPressure,</if>
+			<if test="AssertPressure != null and AssertPressure != ''">AssertPressure,</if>
+			<if test="BMI != null">BMI,</if>
+			<if test="BMI_Suggest != null">BMI_Suggest,</if>
+			<if test="MedicationAdherence != null and MedicationAdherence != ''">MedicationAdherence,</if>
+			<if test="DrugName1 != null and DrugName1 != ''">DrugName1,</if>
+			<if test="Usage_Day1 != null and Usage_Day1 != ''">Usage_Day1,</if>
+			<if test="Doctor != null and Doctor != ''">Doctor,</if>
+		</trim>
+	</sql>
+
+	<sql id="gxyValue">
+		<trim suffixOverrides=",">
+			<if test="Name != null ">#{Name},</if>
+			<if test="idCardNo != null and idCardNo != ''">#{idCardNo},</if>
+			<if test="PresentSymptoms != null and PresentSymptoms != ''">#{PresentSymptoms},</if>
+			<if test="SystolicPressure != null and SystolicPressure != ''">#{SystolicPressure},</if>
+			<if test="AssertPressure != null and AssertPressure != ''">#{AssertPressure},</if>
+			<if test="BMI != null">#{BMI},</if>
+			<if test="BMI_Suggest != null">#{BMI_Suggest},</if>
+			<if test="MedicationAdherence != null and MedicationAdherence != ''">#{MedicationAdherence},</if>
+			<if test="DrugName1 != null and DrugName1 != ''">#{DrugName1},</if>
+			<if test="Usage_Day1 != null and Usage_Day1 != ''">#{Usage_Day1},</if>
+			<if test="Doctor != null and Doctor != ''">#{Doctor},</if>
+		</trim>
+	</sql>
+
+	<insert id="insertGxy" parameterType="SysGxy" useGeneratedKeys="true" keyProperty="idCardNo">
+		insert into `高血压`(<include refid="gxyKey"/>)values(<include refid="gxyValue"/>)
+	</insert>
+
+	<delete id="deleteGxyById" parameterType="String">
+		delete from `高血压` where idCardNo in
+		<foreach collection="array" item="idCardNo" open="(" separator="," close=")">
+			#{idCardNo}
+		</foreach>
+	</delete>
+</mapper>

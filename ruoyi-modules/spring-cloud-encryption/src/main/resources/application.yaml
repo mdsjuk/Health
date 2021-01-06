@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:SPRINGBOOT
+    username: NSCRL
+    password: 740616
+    driver-class-name: oracle.jdbc.OracleDriver
+
+server:
+  port: 9527
+
+mybatis:
+  type-aliases-package: cn.ahut.entity
+  mapper-locations: classpath:mapper/*Mapper.xml

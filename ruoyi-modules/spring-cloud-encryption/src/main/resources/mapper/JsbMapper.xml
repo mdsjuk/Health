@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ahut.Mapper.JsbDataShow">
+    <resultMap type="Psychosispersoninfop" id="SysJsbResult">
+        <result property="skey"             column="sKEY"                />
+        <result property="sno"         column="SNO"            />
+        <result property="sguardianname"              column="SGUARDIANNAME"                 />
+        <result property="sguardianprovince"      column="SGUARDIANPROVINCE"         />
+        <result property="sguardiancity"         column="SGUARDIANCITY"            />
+        <result property="sguardiancountry"   column="SGUARDIANCOUNTRY"      />
+        <result property="sguardianvillage"        column="SGUARDIANVILLAGE"           />
+        <result property="sguardianhouseno"       column="SGUARDIANHOUSENO"          />
+        <result property="sguardiantelephone"      column="SGUARDIANTELEPHONE"         />
+        <result property="spatienttelephone"         column="SPATIENTTELEPHONE"            />
+        <result property="schargephysician"           column="SCHARGEPHYSICIAN"              />
+        <result property="sfirstdiseasetime"           column="SFIRSTDISEASETIME"              />
+        <result property="dfilltime"           column="DFILLTIME"              />
+        <result property="ifirstdiseaseage"           column="IFIRSTDISEASEAGE"              />
+        <result property="ssymptomscode"           column="SSYMPTOMSCODE"              />
+        <result property="ihospitalizations"           column="IHOSPITALIZATIONS"              />
+        <result property="spsychosiscode"           column="SPSYCHOSISCODE"              />
+        <result property="treatmenteffectcode"           column="TREATMENTEFFECTCODE"              />
+        <result property="ihit"           column="IHIT"              />
+        <result property="sdoctoradvice"           column="SDOCTORADVICE"              />
+    </resultMap>
+
+    <resultMap id="Filetest" type="FileDemo">
+        <result property="name"             column="NAME"                />
+        <result property="ctName"             column="CTNAME"                />
+        <result property="upDate"             column="UPDATE"                />
+        <result property="fileSize"             column="FILESIZE"                />
+    </resultMap>
+
+    <resultMap id="SysDictCode" type="Dictinfo">
+        <result property="dm"             column="DM"                />
+        <result property="dmsm"         column="DMSM"            />
+    </resultMap>
+
+    <select id="selectAllJsb" resultMap="SysJsbResult" parameterType="Psychosispersoninfop">
+        SELECT * FROM PSYCHOSISPERSONINFO
+        <where>
+            <if test="sguardianname != null and sguardianname != ''">
+                SGUARDIANNAME = #{sguardianname}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteJsbBySno" parameterType="String">
+        delete from PSYCHOSISPERSONINFO where sno in
+        <foreach collection="array" item="sno" open="(" separator="," close=")">
+            #{sno}
+        </foreach>
+    </delete>
+
+    <select id="selectOneBySno" parameterType="String" resultMap="SysJsbResult">
+        SELECT * FROM  PSYCHOSISPERSONINFO WHERE SNO=#{sno}
+    </select>
+
+    <select id="selectByIhitCode"  resultMap="SysDictCode">
+        SELECT * FROM "CV03.00.112" WHERE DM=#{code}
+    </select>
+
+    <select id="selectByZzCode"  resultMap="SysDictCode">
+        SELECT * FROM "CV05.01.036" WHERE DM=#{code}
+    </select>
+
+    <select id="selectByJsbCode"  resultMap="SysDictCode">
+        SELECT * FROM "CV04.01.009" WHERE DM=#{code}
+    </select>
+
+    <select id="selectByZlCode"  resultMap="SysDictCode">
+        SELECT * FROM "CV05.10.010" WHERE DM=#{code}
+    </select>
+
+
+    <select id="selectAllFile" resultMap="Filetest">
+        SELECT * FROM FILEDEMO
+    </select>
+
+</mapper>

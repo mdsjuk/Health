@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ahut.Mapper.personMapper">
+
+
+  <insert id="addPerson" parameterType="PersonInfo">
+     insert into PSYCHOSISPERSONINFO ( SNO, SGUARDIANNAME,
+      SGUARDIANPROVINCE, SGUARDIANCITY, SGUARDIANCOUNTRY,
+      SGUARDIANVILLAGE, SGUARDIANHOUSENO, SGUARDIANTELEPHONE,
+      SPATIENTTELEPHONE, SCHARGEPHYSICIAN, SFIRSTDISEASETIME,
+       IFIRSTDISEASEAGE,
+      SSYMPTOMSCODE, IHOSPITALIZATIONS, SPSYCHOSISCODE,
+      TREATMENTEFFECTCODE, IHIT,SDOCTORADVICE, DFILLTIME,ISUICIDE,IATTEMPTEDSUICIDE
+      )
+    values (#{sno,jdbcType=VARCHAR}, #{sguardianname,jdbcType=VARCHAR},
+      #{sguardianprovince,jdbcType=VARCHAR}, #{sguardiancity,jdbcType=VARCHAR}, #{sguardiancountry,jdbcType=VARCHAR},
+      #{sguardianvillage,jdbcType=VARCHAR}, #{sguardianhouseno,jdbcType=VARCHAR}, #{sguardiantelephone,jdbcType=VARCHAR},
+      #{spatienttelephone,jdbcType=VARCHAR}, #{schargephysician,jdbcType=VARCHAR}, #{sfirstdiseasetime,jdbcType=VARCHAR},
+       #{ifirstdiseaseage,jdbcType=BLOB},
+      #{ssymptomscode,jdbcType=BLOB}, #{ihospitalizations,jdbcType=BLOB}, #{spsychosiscode,jdbcType=BLOB},
+      #{treatmenteffectcode,jdbcType=BLOB}, #{ihit,jdbcType=BLOB},#{sdoctoradvice,jdbcType=VARCHAR}, #{dfilltime,jdbcType=TIMESTAMP}, #{isuicide,jdbcType=BLOB}, #{iattemptedsuicide,jdbcType=BLOB})
+
+     </insert>
+
+    <select id="selectfa" resultType="FirstAge" >
+        select * from FIRSTDISEASEAGE order by "id" asc
+    </select>
+    <select id="selecthosp" resultType="Hosp" >
+        select * from HOSPITALIZATIONS order by "id" asc
+    </select>
+
+    <select id="selectsyscode" resultType="Syschcode" >
+        select * from SYSCHCODE order by "id" asc
+    </select>
+
+    <select id="selecttreat" resultType="Treat" >
+        select * from TREAT order by "id" asc
+    </select>
+    <select id="selectihit" resultType="Ihit" >
+        select * from IHIT order by "id" asc
+    </select>
+    <select id="selectsucide" resultType="Isuicide" >
+        select * from ISUICIDE order by "id" asc
+    </select>
+    <select id="selectattempt" resultType="Iattempt" >
+        select * from IATTEMPTE order by "id" asc
+    </select>
+
+
+
+    <update id="updateFristage_code" parameterType="FirstAge">
+        update FIRSTDISEASEAGE set "Pid" =  #{pid} where "id"=#{id}
+    </update>
+
+    <update id="updateSysmcode" parameterType="SysmCode">
+        update SYMCODE set "Pid" =  #{pid} where "id"=#{id}
+    </update>
+
+    <update id="updatehosp" parameterType="Hosp">
+        update HOSPITALIZATIONS set "Pid" =  #{pid} where "id"=#{id}
+    </update>
+
+
+
+    <update id="updatesyschcode" parameterType="Syschcode">
+        update SYSCHCODE set "Pid" = #{pid} where "id"=#{id}
+    </update>
+    <update id="updatetreat" parameterType="Treat">
+        update TREAT set "Pid" = #{pid} where "id"=#{id}
+    </update>
+    <update id="updatehit" parameterType="Ihit">
+        update IHIT set "Pid" =  #{pid} where "id"=#{id}
+    </update>
+    <update id="updatesucide" parameterType="Isuicide">
+        update ISUICIDE set "Pid" =  #{pid} where "id"=#{id}
+    </update>
+    <update id="updateattempt" parameterType="Iattempt">
+        update IATTEMPTE set "Pid" =  #{pid} where "id"=#{id}
+    </update>
+
+
+</mapper>
